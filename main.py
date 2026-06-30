@@ -37,7 +37,7 @@ def main():
         
         total_hours = excel_df["Время"].apply(return_hours).sum()
         res_dict["Фамилия"].append(file.split(".")[0])
-        res_dict["Кол-во часов"].append(total_hours / 7)
+        res_dict["Кол-во часов"].append(total_hours / 4)
         
     pd.DataFrame.from_dict(res_dict).to_excel(f"{ROOT}/res.xlsx")
 
