@@ -2,10 +2,17 @@ import pandas as pd
 from os import listdir
 from os.path import isfile, join
 import os
+import sys
 import re
 
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, 'frozen', False):
+    # Запущено как собранный .exe/.bin
+    ROOT = os.path.dirname(sys.executable)
+else:
+    # Запущено как обычный Python-скрипт
+    ROOT = os.path.dirname(os.path.abspath(__file__))
+
 DATA_DIR = ROOT + "/data"
 
 res_dict = {
@@ -31,6 +38,8 @@ def main():
         total_hours = excel_df["Время"].apply(return_hours).sum()
         res_dict["Фамилия"].append(file.split(".")[0])
         res_dict["Кол-во часов"].append(total_hours / 7)
+        
+    pd.DataFrame.from_dict(res_dict).to_excel(f"{ROOT}/res.xlsx")
 
 if __name__ == "__main__":
     main()
