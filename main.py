@@ -31,7 +31,7 @@ def main():
     excels_to_parse = [f for f in listdir(DATA_DIR) if isfile(join(DATA_DIR, f))]
     for file in excels_to_parse:
         full_path_to_file = DATA_DIR + f"/{file}"
-        excel_df = pd.read_excel(full_path_to_file)
+        excel_df = pd.read_excel(full_path_to_file, engine="openpyxl")
         if "Время" not in excel_df.columns:
             print(f"В файле {file} нет столбца 'Время'; он будет пропущен")
         
@@ -39,7 +39,7 @@ def main():
         res_dict["Фамилия"].append(file.split(".")[0])
         res_dict["Кол-во часов"].append(total_hours / 4)
         
-    pd.DataFrame.from_dict(res_dict).to_excel(f"{ROOT}/res.xlsx")
+    pd.DataFrame.from_dict(res_dict).to_excel(f"{ROOT}/res.xlsx", engine="openpyxl")
 
 if __name__ == "__main__":
     main()
